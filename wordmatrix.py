@@ -9,25 +9,25 @@ def parse_pdf(file_path):
         character_count = 0
         word_count = 0
 
-        # Matrix to store character counts per page
+        #Matrix char count/page
         character_matrix = []
 
-        # Matrix to store words per page
+        # Matrix words count/page
         word_matrix = []
 
         for page_num in range(num_pages):
             page = pdf_reader.pages[page_num]
             text = page.extract_text()
 
-            # Count characters and words
+            # char/word count
             character_count += len(text)
             words = text.split()
             word_count += len(words)
 
-            # Store character counts per page in the matrix
+            #countainer store char(s) count ~ matrix
             character_matrix.append(len(text))
 
-            # Store words per page in the matrix
+            #countainer store word(s) ~ matrix
             word_matrix.append(words)
 
         return character_count, word_count, character_matrix, word_matrix
@@ -43,8 +43,8 @@ def display_word_matrix(word_matrix):
         print(f"Page {page_num + 1}:")
         word_counts = Counter(words)
         for word, count in word_counts.items():
-            print(f"{word}: {count}", end="\t")  # Display word and count with a tab separator
-        print()  # Move to the next line
+            print(f"{word}: {count}", end="\t")  # Display word, tab
+        print()  # /n
 
 
 def save_word_matrix_report(word_matrix, file_path):
@@ -53,18 +53,16 @@ def save_word_matrix_report(word_matrix, file_path):
             file.write(f"Page {page_num + 1}:\n")
             word_counts = Counter(words)
             for word, count in word_counts.items():
-                file.write(f"{word}: {count}\t")  # Write word and count with a tab separator
-            file.write("\n")  # Move to the next line
+                file.write(f"{word}: {count}\t")
+            file.write("\n")
 
 
 if __name__ == "__main__":
-    pdf_file = "apple.pdf"  # Replace with your PDF file path
+    pdf_file = "apple.pdf"
     report_file = "word_matrix_report.txt"
 
-    # Parse the PDF file
     character_count, word_count, character_matrix, word_matrix = parse_pdf(pdf_file)
 
-    # Display results
     print(f"Total Characters: {character_count}")
     print(f"Total Words: {word_count}")
     print("Character Matrix:")
@@ -72,7 +70,7 @@ if __name__ == "__main__":
     print("Word Matrix:")
     display_word_matrix(word_matrix)
 
-    # Save word matrix report to file
+    #matrix report
     save_word_matrix_report(word_matrix, report_file)
     print(f"Word Matrix report saved to {report_file}")
 
